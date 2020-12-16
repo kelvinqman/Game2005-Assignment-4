@@ -38,6 +38,14 @@ public class CollisionManager : MonoBehaviour
             {
                 a.contacts.Add(b);
                 a.isColliding = true;
+                if (b.isGround)
+                {
+                    a.onTheGround = true;
+                }
+                else if(b.onTheGround)
+                {
+                    a.onTheGround = true;
+                }
             }
         }
         else
@@ -46,6 +54,14 @@ public class CollisionManager : MonoBehaviour
             {
                 a.contacts.Remove(b);
                 a.isColliding = false;
+                if(b.isGround)
+                {
+                    a.onTheGround = false;
+                }
+                else if (b.onTheGround)
+                {
+                    a.onTheGround = false;
+                }
             }
            
         }
