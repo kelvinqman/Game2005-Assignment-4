@@ -18,6 +18,9 @@ public class CubeBehaviour : MonoBehaviour
     public bool gravity;
     public bool isGround;
     public bool onTheGround;
+    public Vector3 direction;
+
+    public bool hitByBullet;
 
     private MeshFilter meshFilter;
     private Bounds bounds;
@@ -55,6 +58,10 @@ public class CubeBehaviour : MonoBehaviour
             acceleration.y = 0.0f;
             velocity.y = 0.0f;
         }
+        if(hitByBullet)
+        {
+            _Move();
+        }
     }
 
     private void OnDrawGizmos()
@@ -72,5 +79,18 @@ public class CubeBehaviour : MonoBehaviour
         float deltaTime = 1.0f / 60.0f;
         velocity = velocity + acceleration * deltaTime;
         transform.position = transform.position + velocity * deltaTime;
+    }
+
+    public void gotHit(BulletBehaviour bullet)
+    {
+        //velocity = bullet.velocity * (2 * bullet.mass) / (mass + bullet.mass)
+        //         + velocity * (mass - bullet.mass) / (mass + bullet.mass);
+        velocity = bullet.velocity;
+    }
+
+    private void _Move()
+    {
+        float deltaTime = 1.0f / 60.0f;
+        transform.position += velocity * deltaTime;
     }
 }

@@ -91,6 +91,9 @@ public class CollisionManager : MonoBehaviour
             {
                 a.contacts.Add(b);
                 a.isColliding = true;
+                b.gotHit(a);
+                b.hitByBullet = true;
+                a.stop = true;
             }
         }
         else

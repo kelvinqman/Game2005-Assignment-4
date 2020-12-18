@@ -15,8 +15,12 @@ public class BulletBehaviour : MonoBehaviour
     public List<CubeBehaviour> contacts;
 
     public float speed;
+    public Vector3 velocity;
     public Vector3 direction;
     public float range;
+
+    public float mass;
+    public bool stop;
 
     private MeshFilter meshFilter;
     private Bounds bounds;
@@ -28,17 +32,18 @@ public class BulletBehaviour : MonoBehaviour
 
         bounds = meshFilter.mesh.bounds;
         size = bounds.size;
-        //max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
-        //min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
         radius = (max.x - min.x) / 2.0f;
         position = transform.position;
+        velocity = direction * speed;
+        mass = 5.0f;
+        stop = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         position = transform.position;
-        _Move();
+        if(!stop)_Move();
         _CheckBounds();
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
@@ -56,4 +61,6 @@ public class BulletBehaviour : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
 }
